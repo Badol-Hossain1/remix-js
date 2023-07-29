@@ -3,12 +3,12 @@ import { getStoredNotes, storeNotes } from "../data/notes";
 import { redirect } from "@remix-run/node";
 import NoteList, { links as noteListLinks } from "../components/NoteList";
 
-import {  useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 export default function NotesPage() {
   // load the data from loader
   const notes = useLoaderData();
- 
+
   return (
     <>
       <main>
@@ -39,4 +39,18 @@ export async function action({ request }) {
 
 export function links() {
   return [...newNoteLinks(), ...noteListLinks()];
+}
+
+
+
+export function ErrorBoundary({ error }) {
+  return (
+    <main className="error">
+      <h1>An error occurred!</h1>
+      <p>{error?.message}</p>
+      <p>
+        Back to <Link to="/">safety!</Link>
+      </p>
+    </main>
+  );
 }
